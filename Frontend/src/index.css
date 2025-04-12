@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  color: currentColor;
+}
+
+.button {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 6.25rem;
+  color: var(--color-surface-white, black);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.2rem;
+  font-weight: 600;
+  gap: 0.363636em;
+  justify-content: center;
+  letter-spacing: -0.01em;
+  line-height: 1.04545;
+  overflow: hidden;
+  padding: 0.6rem 0.8rem;
+  position: relative;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .button.button--stroke:hover {
+    color: var(--color-just-black, #D81B60);
+    border-width: 3px;
+  }
+}
+
+.button--stroke::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 0.125rem solid var(--color-surface-white, black);
+  border-radius: 6.25rem;
+  pointer-events: none;
+}
+
+.button__label {
+  position: relative;
+  text-align: center;
+  transition: color 50ms ease-in-out;
+}
+
+.button--stroke:hover .button__label {
+  transition: color 0.15s ease-in-out;
+}
+
+.button__flair {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  transform: scale(0);
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.button__flair span {
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-surface-white, black);
+  border-radius: 50%;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 170%;
+}
