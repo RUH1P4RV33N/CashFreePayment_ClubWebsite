@@ -1,22 +1,22 @@
 import { useState } from 'react'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import Hero from './components/Hero'
-import Navbar from './components/Navbar'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Payment from './pages/Payment.jsx'
+import Layout from './pages/Layout'
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
 
-  return (
-    <Router>
-      {/* Navbar always rendered, but controlled by showNavbar */}
-      <Navbar show={showNavbar} />
-
-      <Routes>
-        <Route path='/' element={<Hero onFinish={() => setShowNavbar(true)} />} />
-        {/* Add more routes here */}
-      </Routes>
-    </Router>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Layout showNavbar={true} />}>
+        <Route index element={<Hero onFinish={() =>{ setShowNavbar(true); console.log(showNavbar); }} />} />
+        <Route path="/payment" element={<Payment />} />
+      </Route>
+    )
   )
+
+  return <RouterProvider router={router} />
 }
 
 export default App

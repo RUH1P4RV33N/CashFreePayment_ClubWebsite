@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import img1 from '../assets/img1.jpg'
 import img2 from '../assets/img2.jpg'
@@ -18,7 +18,7 @@ function Hero({ onFinish }) {
 
   const positions = [
     { x: 50, y: 10 },
-    { x: 600, y:80 },
+    { x: 600, y: 80 },
     { x: 1200, y: 100 },
     { x: 300, y: 0 },
     { x: 900, y: 20 },
@@ -27,71 +27,47 @@ function Hero({ onFinish }) {
     { x: 700, y: 300 },
     { x: 400, y: 100 },
   ]
-  
 
   useEffect(() => {
+    // Ensure all refs are set
+    if (!imagesRefs.current.every(el => el)) return;
+
     const tl = gsap.timeline({
       onComplete: () => {
-        if (onFinish) onFinish()
+        console.log("🎉 Animation complete");
+        if (onFinish) onFinish();
       }
-    })
+    });
 
-    // Step 1: Animate "Welcome to the Club"
+    // Animate "Welcome to the Club" Text
     tl.fromTo(
       startTextRef.current.querySelectorAll('span'),
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 0.9,
-        y: 0,
-        stagger: 0.6,
-        ease: 'power3.out',
-        duration: 0.6,
-      }
-    )
+      { opacity: 0, y: 50 },
+      { opacity: 0.9, y: 0, stagger: 0.6, ease: 'power3.out', duration: 0.6 }
+    );
 
-    // Step 2: Animate images with positioning
+    // Animate Images
     imagesRefs.current.forEach((el, index) => {
-      const { x, y } = positions[index]
-      gsap.set(el, { x, y }) // set initial position immediately
+      const { x, y } = positions[index];
+      gsap.set(el, { x, y });
 
       tl.fromTo(
         el,
-        {
-          opacity: 0,
-          scale: 0.5,
-        },
-        {
-          opacity: 1,
-          x,
-          y,
-          scale: 1,
-          ease: 'power2.out',
-          duration: 0.8,
-        },
-        `+=${index === 0 ? 0.5 : 0.3}` // spacing between images
-      )
-    })
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.8 },
+        `+=${index === 0 ? 0.5 : 0.3}`
+      );
+    });
 
-    // Step 3: Animate "Joon's" text after last image
+    // Animate "Joon's" Text
     tl.fromTo(
       textRef.current.querySelectorAll('span'),
-      {
-        opacity: 0,
-        x: 0,
-      },
-      {
-        opacity: 0.8,
-        x: 50,
-        stagger: 0.6,
-        ease: 'power3.out',
-        duration: 1,
-      },
+      { opacity: 0, x: 0 },
+      { opacity: 0.8, x: 50, stagger: 0.6, ease: 'power3.out', duration: 1 },
       '+=0.5'
-    )
-  }, [])
+    );
+
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen">
@@ -134,7 +110,7 @@ function Hero({ onFinish }) {
         />
       ))}
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
